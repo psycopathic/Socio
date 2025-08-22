@@ -54,3 +54,11 @@ export async function getUserById(clerkId: string) {
     console.log("Error in getUserById", error);
   }
 }
+
+export async function getDbUserId() {
+  const { userId: clerkId } = await auth();
+  if (!clerkId) throw new Error("UnAuthenticated");
+  const user = await getUserById(clerkId);
+  if (!user) throw new Error("User not found");
+  return user.id;
+}
